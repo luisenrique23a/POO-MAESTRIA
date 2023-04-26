@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args){
+
+        UserSession.getUniqueInstance().setUser("luisenrique.2399@hotmail.com","6861734567","apple123","hola");
+        NotificationFactory factory = new NotificationFactory();
+
+        UserSession.getUniqueInstance().subscribe((Observer) factory.SendNotification("email"));
+        UserSession.getUniqueInstance().subscribe((Observer) factory.SendNotification("sms"));
+        UserSession.getUniqueInstance().setPassword("hola12");
+
+        //empieza el chat
+
+        ChatRoom chatroom=new ChatRoom();
+        chatroom.subscribe((Observer) factory.SendNotification("push"));
+        String message;
+
+        do{
+            message=new Scanner(System.in).nextLine();
+            message=message.trim();
+            chatroom.writeMessage(message);
+        }while(!message.equalsIgnoreCase("exit"));
+
+        //termina chat
+
+
+    }
+}
